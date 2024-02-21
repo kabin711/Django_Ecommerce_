@@ -1,0 +1,22 @@
+
+<div class="container">
+    <h2 class="title text-center mb-4">Explore Popular Categories</h2><!-- End .title text-center -->
+    
+    <div class="cat-blocks-container">
+        <div class="row">
+            {%for p in popular_category %}
+            <div class="col-6 col-sm-4 col-lg-2">
+                <a href="{%url 'clients:productview' p.id%}" class="cat-block">
+                    <figure>
+                        <span>
+                            <img src="{{p.image.url}}" alt="{{p.name}}">
+                        </span>
+                    </figure>
+
+                    <h3 class="cat-block-title">{{p.name|title}}</h3><!-- End .cat-block-title -->
+                </a>
+            </div><!-- End .col-sm-4 col-lg-2 -->
+            {%endfor%}
+        </div><!-- End .row -->
+    </div><!-- End .cat-blocks-container -->
+</div><!-- End .container -->

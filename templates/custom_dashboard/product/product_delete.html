@@ -1,0 +1,14 @@
+{%extends 'custom_dashboard/base.html'%}
+{% load crispy_forms_tags %}
+
+
+{%block content%}
+<div class="container-xxl flex-grow-1 container-p-y">
+           <form method= 'post' action = "{%url 'dashboard:product_delete' pk%}">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <input type="submit" value = 'delete product'>
+                    <a href="{%url "dashboard:product_list" %}">Cancel</a>
+           </form>
+        </div>
+{%endblock%}

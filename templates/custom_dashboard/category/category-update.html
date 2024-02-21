@@ -1,0 +1,13 @@
+{%extends 'custom_dashboard/base.html'%}
+{% load crispy_forms_tags %}
+
+
+{%block content%}
+<div class="container-xxl flex-grow-1 container-p-y">
+           <form method= 'post' action = "{%url 'dashboard:category-update' pk%}">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <input type="submit" value = 'Update category'>
+           </form>
+        </div>
+{%endblock%}

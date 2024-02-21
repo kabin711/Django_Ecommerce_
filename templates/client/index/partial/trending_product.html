@@ -1,0 +1,97 @@
+<div class="bg-light pt-5 pb-6">
+    <div class="container trending-products">
+        <div class="heading heading-flex mb-3">
+            <div class="heading-left">
+                <h2 class="title">Trending Products</h2><!-- End .title -->
+            </div><!-- End .heading-left -->
+
+           <div class="heading-right">
+                <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="trending-top-link" data-toggle="tab" href="#trending-top-tab" role="tab" aria-controls="trending-top-tab" aria-selected="true">Top Rated</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="trending-best-link" data-toggle="tab" href="#trending-best-tab" role="tab" aria-controls="trending-best-tab" aria-selected="false">Best Selling</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="trending-sale-link" data-toggle="tab" href="#trending-sale-tab" role="tab" aria-controls="trending-sale-tab" aria-selected="false">On Sale</a>
+                    </li>
+                </ul>
+           </div><!-- End .heading-right -->
+        </div><!-- End .heading -->
+
+
+
+            <div class="col-xl-4-5col">
+                <div class="tab-content tab-content-carousel just-action-icons-sm">
+                    <div class="tab-pane p-0 fade show active" id="trending-top-tab" role="tabpanel" aria-labelledby="trending-top-link">
+                        <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                            data-owl-options='{
+                                "nav": true, 
+                                "dots": false,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "480": {
+                                        "items":2
+                                    },
+                                    "768": {
+                                        "items":3
+                                    },
+                                    "992": {
+                                        "items":4
+                                    }
+                                }
+                            }'>
+                            {%for p in is_featured %}
+                            
+                            <div class="product product-2">
+                                <figure class="product-media">
+                                    <span class="product-label label-circle label-top">Top</span>
+                                    <a href="{% url 'clients:productview' product_id=p.id %}">
+                                        <img src="{{p.image.url}}" alt="{{p.name}}" class="product-image">
+                                    </a>
+
+                                    <div class="product-action-vertical">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                    </div><!-- End .product-action -->
+
+                                    <div class="product-action">
+                                        <a href="" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                        <a href="{% url 'clients:productview' product_id=p.id %}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                    </div><!-- End .product-action -->
+                                </figure><!-- End .product-media -->
+
+                                <div class="product-body">
+                                    <div class="product-cat">
+                                        <a href="#">{{p.category.name}}</a>
+                                    </div><!-- End .product-cat -->
+                                    <h3 class="product-title"><a href="product.html">{{p.name|title}}</a></h3><!-- End .product-title -->
+                                    <div class="product-price">
+                                        Rs.{{p.price}}
+                                    </div><!-- End .product-price -->
+                                    <div class="product-quantity">
+                                        quantity {{p.quantity}}
+                                    </div><!-- End .product-quantity -->
+                                    <div class="product-color">
+                                        {{p.color}}
+                                    </div><!-- End .product-color -->
+                                    <div class="product-nav ">
+                                    <h5 class="product-description">{{p.description}}</h5><!-- End .product-description -->
+                                        
+                                    </div><!-- End .product-nav -->
+                                </div><!-- End .product-body -->
+                            </div><!-- End .product -->
+                            {%endfor%}
+
+
+                        </div><!-- End .owl-carousel -->
+                    </div><!-- .End .tab-pane -->
+                </div><!-- End .tab-content -->
+            </div><!-- End .col-xl-4-5col -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</div><!-- End .bg-light pt-5 pb-6 -->

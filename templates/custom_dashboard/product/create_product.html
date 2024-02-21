@@ -1,0 +1,13 @@
+{%extends 'custom_dashboard/base.html'%}
+{% load crispy_forms_tags %}
+
+
+{%block content%}
+<div class="container-xxl flex-grow-1 container-p-y">
+           <form method= 'post' enctype='multipart/form-data' action = "{%url 'dashboard:product-create'%}">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <input type="submit" value = 'create product'>
+           </form>
+        </div>
+{%endblock%}
