@@ -1,7 +1,10 @@
+{%load static%}
 <div class="page-wrapper">
     <header class="header header-intro-clearance header-4">
         <div class="header-top">
+
             <div class="container">
+                
                 <div class="header-left">
                     <a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a>
                 </div><!-- End .header-left -->
@@ -14,7 +17,6 @@
                             <ul>
                                 <li><a href="{%url 'accounts:logout'%}" data-toggle="modal">Sign in / Sign up</a></li>
                                 
-                                <li><a href="#signin-modal" data-toggle="modal">Sign in / Sign up</a></li>
                             </ul>
                         </li>
                     </ul><!-- End .top-menu -->
@@ -32,7 +34,7 @@
                     </button>
                     
                     <a href="{%url 'clients:index'%}" class="logo">
-                        <img src="client/assets/images/demos/demo-4/logo.png" alt="Molla Logo" width="105" height="25">
+                        <img src="{% static 'client/assets/images/demos/demo-4/logo.png' %}" alt="Molla Logo" width="105" height="25">
                     </a>
                 </div><!-- End .header-left -->
 
@@ -77,6 +79,7 @@
                     </div><!-- End .compare-dropdown -->
 
                     <div class="dropdown cart-dropdown">
+                        
                         <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                             <div class="icon">
                                 <i class="icon-shopping-cart"></i>

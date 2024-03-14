@@ -9,6 +9,8 @@ from catalogue.models import (Category,
                               Banner,Brand)
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.contrib import messages
 # Create your views here.
 
 class BaseView(TemplateView):
@@ -107,6 +109,7 @@ def AddToCart(request, product_id):
                 product = product, quantity = quantity)
     
     category_slug = item.product.category.slug
+    messages.success(request,'Item added successfully!!')
     return redirect('clients:categorylist', slug = category_slug)
 
 def view_cart(request):
@@ -130,4 +133,25 @@ def view_cart(request):
 def Remove_From_Cart(request, item_id):
     item = CartItem.objects.get(id=item_id)
     item.delete()
+    messages.success(request,'Item removed successfully!!')
+    return redirect('clients:view_cart')
+
+@require_POST
+def Update_Cart(request):
+    try:
+        cart = request.user.cart_user  # Access the Cart object associated with the current user
+    except Cart.DoesNotExist:
+        # Handle the case where the user does not have a cart
+        return redirect('clients:productview')
+    updated_items = 0
+    for cart_item in cart.cart_item.all():
+        quantity_key = f'quantity_{cart_item.id}'
+        if quantity_key in request.POST:
+            cart_item.quantity = request.POST.get(quantity_key)
+            cart_item.save()
+            updated_items += 1
+    if updated_items > 0:
+        messages.success(request,f'{updated_items} item(s) updated successfully.')
+    else:
+        messages.info(request, 'No items were updated.')
     return redirect('clients:view_cart')

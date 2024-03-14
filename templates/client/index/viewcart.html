@@ -1,4 +1,6 @@
 {%extends 'client/base.html'%}
+
+
 {%block content%}
 <main class="main">
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
@@ -17,10 +19,22 @@
     </nav><!-- End .breadcrumb-nav -->
 
     <div class="page-content">
+            {%if messages%}
         <div class="cart">
+                {%for message in messages%}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+            
             <div class="container">
+                
                 <div class="row">
+                    
                     <div class="col-lg-9">
+                        <form method = 'POST' action = "{%url 'clients:update_cart' %}" id="update-cart-form">
+                            {% csrf_token %}
                         <table class="table table-cart table-mobile">
                             <thead>
                                 <tr>
@@ -51,7 +65,7 @@
                                     <td class="price-col">{{cart_item.product.price}}</td>
                                     <td class="quantity-col">
                                         <div class="cart-product-quantity">
-                                            <input type="number" class="form-control" value="{{cart_item.quantity}}" min="1" max="10" step="1" data-decimals="0" required>
+                                            <input type="number" class="form-control" name="quantity_{{ cart_item.id }}" value="{{cart_item.quantity}}" min="1" max="10" step="1" data-decimals="0" required>
                                         </div><!-- End .cart-product-quantity -->
                                     </td>
                                     <td class="total-col">{{cart_item.total_cost}}</td>
@@ -64,9 +78,11 @@
                         <div class="cart-bottom">
                             
 
-                            <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
+                            <button type = "submit" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></button>
                         </div><!-- End .cart-bottom -->
+                    </form>
                     </div><!-- End .col-lg-9 -->
+                
                     <aside class="col-lg-3">
                         <div class="summary summary-cart">
                             <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
@@ -102,15 +118,6 @@
                                         <td>$10.00</td>
                                     </tr><!-- End .summary-shipping-row -->
 
-                                    <tr class="summary-shipping-row">
-                                        <td>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
-                                                <label class="custom-control-label" for="express-shipping">Express:</label>
-                                            </div><!-- End .custom-control -->
-                                        </td>
-                                        <td>$20.00</td>
-                                    </tr><!-- End .summary-shipping-row -->
 
                                     <tr class="summary-shipping-estimate">
                                         <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>

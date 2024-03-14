@@ -24,5 +24,33 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, related_name = 'cart_product', on_delete = models.CASCADE)
     quantity = models.IntegerField(default = 0)
     
-# class Order(models.Model):
-#     user = models.OneToOneField(User, related_name = 'user_order', on_delete = models.CASCADE )
+class Order(models.Model):
+    PENDING = 'Pending'
+    PROCESSING = 'Processing'
+    DELIVERED = 'Delivered'
+
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (PROCESSING, 'Processing'),
+        (DELIVERED, 'Delivered'),
+    ]
+    user = models.OneToOneField(User, related_name = 'user_order', on_delete = models.CASCADE )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    total_price = models.DecimalField(max_digits=15, decimal_places = 2, default = 0.0)
+    status = models.CharField(max_length=20, choices = STATUS_CHOICES, default = PENDING)
+    
+    def calculate_total(self):
+        total = 0
+        for item in self.order_items.all():
+            total += item.calculate_subtotal()
+            self.total_price = total
+            self.save()
+        
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='order_products', on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+
+    def calculate_subtotal(self):
+        return self.quantity * self.product.price
